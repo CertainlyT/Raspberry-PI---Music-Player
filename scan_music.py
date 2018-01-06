@@ -14,13 +14,8 @@ class ScanMusic:
             fH = open(self.filename, 'rb')
         except:
             return []
-
-        try:
-            db = pickle.load(fH)
-        except:
-            pass
-        fH.close()
-        return db
+        else:
+            return []
 
     def write_musicdb(self, db):
         fH = open(self.filename, 'wb')
@@ -50,4 +45,4 @@ if __name__ == "__main__":
     musicdb = s.make_musicdb()
     s.search_music("/home/pi/Music/", musicdb)
     s.write_musicdb(musicdb)
-    s.showScoreDB(musicdb, "Artist")
+    print(len(musicdb))
