@@ -25,9 +25,19 @@ class PlayMusic:
             return self.shuffle_music(self.read_musicdb())
         length = len(db)
         random_num = random.randint(0, length - 1)
-        print("Artist: %s\nTitle: %s" % (db[random_num]['Artist'], db[random_num]['Title']))
+        artist = db[random_num]['Artist']
+        title = db[random_num]['Title']
+        self.set_nowplaying(artist, title)
+        print("Artist: %s\nTitle: %s" % (artist, title))
         subprocess.call(['omxplayer', '--vol', '-2000', "/home/pi/Music/" + db[random_num]['FileName']])
         db.remove(db[random_num])
+
+    def set_nowplaying(self, a, t):
+        nowplaying_db = '/home/pi/nowplaying.dat'
+        fH = open(nowplaying_db, 'wb')
+        db = [{'Artist': a, 'Title': t}]
+        pickle.dump(db, fH)
+        fH.close()
 
 
 if __name__ == "__main__":
